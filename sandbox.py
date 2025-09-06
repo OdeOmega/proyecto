@@ -8,6 +8,14 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
+# === Nuevo: argumentos CLI mínimos ===
+import argparse
+parser = argparse.ArgumentParser(description="Consulta próximos trenes Ferrovías.")
+parser.add_argument("--origen", required=True, help="Estación de origen (p.ej. 'Retiro')")
+parser.add_argument("--llegada", required=True, help="Estación de destino (p.ej. 'Cecilia Grierson')")
+parser.add_argument("--tipo-dia", type=int, default=1, help="1=Lun a Vie, 2=Sábados, 3=Dom/Feriados")
+args = parser.parse_args()
+
 # =========================
 # Utilidades
 # =========================
@@ -44,6 +52,11 @@ ESTACION_ORIGEN = "Retiro"
 ESTACION_DESTINO = "Cecilia Grierson"
 # 1 = Lun a Vie, 2 = Sábados, 3 = Dom/Feriados (ajusta si difiere)
 TIPO_DIA = 1
+
+# === Nuevo: sobrescribir con CLI (mínimo cambio) ===
+ESTACION_ORIGEN = args.origen
+ESTACION_DESTINO = args.llegada
+TIPO_DIA = args.tipo_dia
 
 # =========================
 # Sesión y fetch sitemap
